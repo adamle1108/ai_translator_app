@@ -1,0 +1,1 @@
+ /Users/ad/Documents/App/AI\ Translate/ai_translator_app/.dart_tool/flutter_build/f0d900e1ecb5dbba7d58826da83e6f79/native_assets.json: 

@@ -1,5 +1,6 @@
 abstract class Routes {
   Routes._();
+  static const tabbarScreen = Paths.tabbarScreen;
   static const splashScreen = Paths.splashScreen;
   static const homeScreen = Paths.homeScreen;
   static const translationScreen = Paths.translationScreen;
@@ -17,6 +18,7 @@ abstract class Routes {
 }
 
 abstract class Paths {
+  static const tabbarScreen = '/TabbarScreen';
   static const splashScreen = '/SplashScreenView';
   static const homeScreen = '/HomeView';
   static const translationScreen = '/TranslationView';

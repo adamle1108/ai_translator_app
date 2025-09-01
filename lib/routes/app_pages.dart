@@ -18,14 +18,15 @@ import 'package:aivoicetranslation/Screens/PremiumScreen/PremiumBinding.dart';
 import 'package:aivoicetranslation/Screens/SelectLanguage/SelectLanguageBinding.dart';
 import 'package:aivoicetranslation/Screens/SelectLanguage/SelectLanguageView.dart';
 import 'package:aivoicetranslation/Screens/SettingScreen/SettingBinding.dart';
-import 'package:aivoicetranslation/Screens/SettingScreen/SettingController.dart';
 import 'package:aivoicetranslation/Screens/SettingScreen/SettingView.dart';
 import 'package:aivoicetranslation/Screens/SubPhrasesScreen/SubPhrasesBInding.dart';
 import 'package:aivoicetranslation/Screens/SubPhrasesScreen/SubPhrasesView.dart';
+import 'package:aivoicetranslation/Screens/Tabbar/TabbarBinding.dart';
 import 'package:aivoicetranslation/Screens/TranslationScreen/TranslationBinding.dart';
 import 'package:aivoicetranslation/Screens/TranslationScreen/TranslationView.dart';
 import 'package:get/get.dart';
 import '../Screens/PremiumScreen/PremiumView.dart';
+import '../Screens/Tabbar/TabbarScreen.dart';
 import '../Screens/splashScreen/SplashScreenBinding.dart';
 import '../Screens/splashScreen/splashScreenView.dart';
 import 'app_routes.dart';
@@ -43,69 +44,69 @@ class AppPages {
       binding: SplashBinding(),
     ),
     GetPage(
-      name: Paths.homeScreen,
-      page: () => const HomeView(),
-      binding: HomeBinding(),
+      name: Paths.tabbarScreen,
+      page: () => const MainView(),
+      binding: TabbarBinding(),
     ),
     GetPage(
-      name: Paths.translationScreen,
-      page: () => const TranslationView(),
-      binding: TranslationBinding(),
-    ),
+        name: Paths.translationScreen,
+        page: () => const TranslationView(),
+        binding: TranslationBinding(),
+        transition: Transition.rightToLeft),
     GetPage(
       name: Paths.selectLanguageView,
       page: () => const SelectLanguageView(),
       binding: SelectLanguageBinding(),
     ),
     GetPage(
-      name: Paths.settingView,
-      page: () => const SettingView(),
-      binding: SettingBinding(),
-    ),
+        name: Paths.settingView,
+        page: () => const SettingView(),
+        binding: SettingBinding(),
+        transition: Transition.rightToLeft),
     GetPage(
-      name: Paths.historyView,
-      page: () => const HistoryView(),
-      binding: HistoryBinding(),
-    ),
+        name: Paths.historyView,
+        page: () => const HistoryView(),
+        binding: HistoryBinding(),
+        transition: Transition.rightToLeft),
     GetPage(
-      name: Paths.conversationView,
-      page: () => const ConversationView(),
-      binding: ConversationBinding(),
-    ),
+        name: Paths.conversationView,
+        page: () => const ConversationView(),
+        binding: ConversationBinding(),
+        transition: Transition.rightToLeft),
     GetPage(
-      name: Paths.oCRView,
-      page: () => const OCRView(),
-      binding: OCRBinding(),
-    ),
+        name: Paths.oCRView,
+        page: () => const OCRView(),
+        binding: OCRBinding(),
+        transition: Transition.rightToLeft),
     GetPage(
-      name: Paths.phrasesView,
-      page: () => const PhrasesView(),
-      binding: PhrasesBinding(),
-    ),
+        name: Paths.phrasesView,
+        page: () => const PhrasesView(),
+        binding: PhrasesBinding(),
+        transition: Transition.rightToLeft),
     GetPage(
-      name: Paths.subPhrasesView,
-      page: () => const SubPhrasesView(),
-      binding: SubPhrasesBinding(),
-    ),
+        name: Paths.subPhrasesView,
+        page: () => const SubPhrasesView(),
+        binding: SubPhrasesBinding(),
+        transition: Transition.rightToLeft),
     GetPage(
-      name: Paths.dictionaryView,
-      page: () => const DictionaryView(),
-      binding: DictionaryBinding(),
-    ),
+        name: Paths.dictionaryView,
+        page: () => const DictionaryView(),
+        binding: DictionaryBinding(),
+        transition: Transition.rightToLeft),
     GetPage(
-      name: Paths.aiTranslationView,
-      page: () => const AiTranslationView(),
-      binding: AiTranslationBinding(),
-    ),
+        name: Paths.aiTranslationView,
+        page: () => const AiTranslationView(),
+        binding: AiTranslationBinding(),
+        transition: Transition.rightToLeft),
     GetPage(
-      name: Paths.grammarView,
-      page: () => const GrammarView(),
-      binding: GrammarBinding(),
-    ),
+        name: Paths.grammarView,
+        page: () => const GrammarView(),
+        binding: GrammarBinding(),
+        transition: Transition.rightToLeft),
     GetPage(
-      name: Paths.premiumView,
-      page: () => const PremiumView(),
-      binding: PremiumBinding(),
-    ),
+        name: Paths.premiumView,
+        page: () => const PremiumView(),
+        binding: PremiumBinding(),
+        transition: Transition.downToUp),
   ];
 }

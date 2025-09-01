@@ -19,7 +19,7 @@ class SplashScreenController extends GetxController{
   navigation()
   {
     Future.delayed(const Duration(seconds: 3),() {
-      Get.offAllNamed(Routes.homeScreen);
+      Get.offAllNamed(Routes.tabbarScreen);
     },);
   }
 

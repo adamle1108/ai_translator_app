@@ -6,6 +6,8 @@ import 'package:dart_openai/dart_openai.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:get/get.dart';
+import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import '../../SharePrefHelper/SharePref.dart';
@@ -16,6 +18,10 @@ import '../PremiumScreen/PremiumController.dart';
 
 class TranslationController extends GetxController {
   Map<String, dynamic>? argument = Get.arguments;
+  RxString selectedModel = "Translate Expert".obs;
+
+  final ImagePicker _picker = ImagePicker();
+  File? _image;
 
   // INPUT
   final TextEditingController textFieldController = TextEditingController();
@@ -32,10 +38,13 @@ class TranslationController extends GetxController {
   bool isLoading = false;
 
   // OPTIONS
-  bool showPhonetic = true;                       // Hiển thị phiên âm
-  String expertMode = "Translate Expert";         // Dropdown
+  bool showPhonetic = true; // Hiển thị phiên âm
+  String expertMode = "Translate Expert"; // Dropdown
   final List<String> expertModes = const [
-    "Translate Expert", "Formal", "Casual", "Literal"
+    "Translate Expert",
+    "Formal",
+    "Casual",
+    "Literal"
   ];
 
   // SPEECH/TTS
@@ -60,6 +69,22 @@ class TranslationController extends GetxController {
     }
   }
 
+  Future<void> pickImage(ImageSource source) async {
+    final XFile? pickedImage = await _picker.pickImage(source: source);
+
+    if (pickedImage != null) {
+      _image = File(pickedImage.path);
+      final textRecognizer =
+          TextRecognizer(script: TextRecognitionScript.latin);
+      final inputImage = InputImage.fromFile(_image!);
+      final RecognizedText recognizedText =
+          await textRecognizer.processImage(inputImage);
+      String text = recognizedText.text;
+      textRecognizer.close();
+      Get.toNamed(Routes.oCRView, arguments: {"image": _image, "text": text});
+    }
+  }
+
   // === Language changes ===
   void onChangeLanguage(final language) {
     // Kỳ vọng trả về đủ 4 key dưới đây
@@ -71,8 +96,12 @@ class TranslationController extends GetxController {
   }
 
   void swapLanguage() {
-    final tLang = fromLanguage;           fromLanguage = toLanguage;           toLanguage = tLang;
-    final tCode = fromLanguageCode;       fromLanguageCode = toLanguageCode;   toLanguageCode = tCode;
+    final tLang = fromLanguage;
+    fromLanguage = toLanguage;
+    toLanguage = tLang;
+    final tCode = fromLanguageCode;
+    fromLanguageCode = toLanguageCode;
+    toLanguageCode = tCode;
     // (giữ nguyên nội dung nhập/kết quả để người dùng chủ động bấm Dịch lại)
     update();
   }
@@ -127,9 +156,12 @@ class TranslationController extends GetxController {
     await flutterTts.speak(correctionAiResponse);
   }
 
-  Future<void> _setAwaitOptions() async => flutterTts.awaitSpeakCompletion(true);
-  Future<void> _getDefaultEngine() async => print(await flutterTts.getDefaultEngine);
-  Future<void> _getDefaultVoice() async => print(await flutterTts.getDefaultVoice);
+  Future<void> _setAwaitOptions() async =>
+      flutterTts.awaitSpeakCompletion(true);
+  Future<void> _getDefaultEngine() async =>
+      print(await flutterTts.getDefaultEngine);
+  Future<void> _getDefaultVoice() async =>
+      print(await flutterTts.getDefaultVoice);
 
   void initTts() {
     flutterTts = FlutterTts();
@@ -138,7 +170,9 @@ class TranslationController extends GetxController {
       _getDefaultEngine();
       _getDefaultVoice();
     }
-    flutterTts.setStartHandler(() { update(); });
+    flutterTts.setStartHandler(() {
+      update();
+    });
     flutterTts.setCompletionHandler(() {});
     flutterTts.setCancelHandler(() {});
     flutterTts.setPauseHandler(() {});
@@ -157,7 +191,7 @@ class TranslationController extends GetxController {
     final systemMessage = OpenAIChatCompletionChoiceMessageModel(
       content: [
         OpenAIChatCompletionChoiceMessageContentItemModel.text(
-          "You will be provided with a sentence in $fromLanguage, and your task is to translate it into $toLanguage.",
+          "You are $selectedModel AI model. You will be provided with a sentence in $fromLanguage, and your task is to translate it into $toLanguage."
         ),
       ],
       role: OpenAIChatMessageRole.assistant,
@@ -186,7 +220,8 @@ class TranslationController extends GetxController {
             .join();
 
         correctionAiResponse = aiResponseText ?? "";
-        dbHelper.insertTranslation(TranslationModel(text: text, answer: correctionAiResponse));
+        dbHelper.insertTranslation(
+            TranslationModel(text: text, answer: correctionAiResponse));
       } else {
         Get.toNamed(Routes.premiumView);
       }

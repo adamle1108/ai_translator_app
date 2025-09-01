@@ -1,22 +1,15 @@
-import 'package:aivoicetranslation/constant/AppAssets.dart';
 import 'package:aivoicetranslation/constant/Appkey.dart';
 import 'package:aivoicetranslation/constant/FontFamily.dart';
 import 'package:aivoicetranslation/routes/app_routes.dart';
-import 'package:aivoicetranslation/widgets/textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import '../PremiumScreen/PremiumController.dart';
 import 'HomeController.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
-
-  @override
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
         backgroundColor: context.theme.scaffoldBackgroundColor,
@@ -65,95 +58,80 @@ class HomeView extends GetView<HomeController> {
           ],
         ),
         body: Padding(
-          padding: const EdgeInsets.all(15),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  height: 150,
-                  decoration: BoxDecoration(
-                    color: context.theme.hintColor,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 2,
-                        blurRadius: 7,
-                        offset: const Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        AppTextField(
-                          readOnly: true,
+                Stack(
+                  children: [
+                    // TextField rộng + cao, luôn viền xám
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: TextField(
+                        readOnly: true,
+                        maxLines: 5, // 👈 chỉnh số dòng để tăng chiều cao
+                        decoration: InputDecoration(
                           hintText: "Enter Text..",
-                          onTap: () {
-                            Get.toNamed(Routes.translationScreen);
-                          },
+                          alignLabelWithHint: true,
+                          contentPadding: const EdgeInsets.all(12),
+
+                          // viền mặc định
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(
+                              color: Colors.grey,
+                              width: 1,
+                            ),
+                          ),
+                          // viền khi enabled
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(
+                              color: Colors.grey,
+                              width: 1,
+                            ),
+                          ),
+                          // viền khi focus (không đổi màu)
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(
+                              color: Colors.grey,
+                              width: 1,
+                            ),
+                          ),
                         ),
-                        const Spacer(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                showImagePickerOptions(context);
-                              },
-                              child: Column(
-                                children: [
-                                  Icon(
-                                    Icons.camera_alt,
-                                    color: context.theme.primaryColor,
-                                    size: 30,
-                                  ),
-                                  Text(
-                                    "Camera",
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontFamily: poppins,
-                                        fontWeight: FontWeight.bold,
-                                        color: context.theme.primaryColor),
-                                  )
-                                ],
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            InkWell(
-                              onTap: () {
-                                Get.toNamed(Routes.conversationView);
-                              },
-                              child: Column(
-                                children: [
-                                  Icon(
-                                    Icons.mic,
-                                    color: context.theme.primaryColor,
-                                    size: 30,
-                                  ),
-                                  Text(
-                                    "Voice",
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontFamily: poppins,
-                                        fontWeight: FontWeight.bold,
-                                        color: context.theme.primaryColor),
-                                  )
-                                ],
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            )
-                          ],
-                        )
-                      ],
+                        onTap: () {
+                          Get.toNamed(Routes.translationScreen);
+                        },
+                      ),
                     ),
-                  ),
+
+                    Positioned(
+                      left: 12,
+                      bottom: 12,
+                      child: ElevatedButton(
+                        onPressed: () => Get.toNamed(Routes.translationScreen),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          foregroundColor: Theme.of(context).primaryColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            side: const BorderSide(color: Colors.grey),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(Icons.translate, size: 20),
+                            const SizedBox(width: 6),
+                            Text("Translate Expert"), // dùng Obx để update
+                            const Icon(Icons.keyboard_arrow_down),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(
                   height: 15,
@@ -209,174 +187,6 @@ class HomeView extends GetView<HomeController> {
                   height: 15,
                 ),
                 GestureDetector(
-                  onTap: () {
-                    Get.toNamed(Routes.conversationView);
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: const Color(0xff0086ee)),
-                    child: ListTile(
-                      leading: Container(
-                        height: 50,
-                        width: 50,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: context.theme.hintColor),
-                        child: const Icon(
-                          Icons.mic,
-                          color: Color(0xff0086ee),
-                          size: 40,
-                        ),
-                      ),
-                      title: Text(
-                        "Voice Conversation",
-                        style: TextStyle(
-                            color: context.theme.hintColor,
-                            fontSize: 18,
-                            fontFamily: poppins,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Text(
-                        "Conversations in Motion: Expressing Through Voice",
-                        style: TextStyle(
-                            color: context.theme.scaffoldBackgroundColor,
-                            fontSize: 14,
-                            fontFamily: poppins,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                GestureDetector(
-                  onTap: () => showImagePickerOptions(context),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: const Color(0xff853cea)),
-                    child: ListTile(
-                      leading: Container(
-                        height: 50,
-                        width: 50,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: context.theme.hintColor),
-                        child: const Icon(
-                          Icons.language,
-                          color: Color(0xff853cea),
-                          size: 30,
-                        ),
-                      ),
-                      title: Text(
-                        "OCR Translator",
-                        style: TextStyle(
-                            color: context.theme.hintColor,
-                            fontSize: 18,
-                            fontFamily: poppins,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Text(
-                        "Bringing Words to Life: Translating Text from Images",
-                        style: TextStyle(
-                            color: context.theme.scaffoldBackgroundColor,
-                            fontSize: 14,
-                            fontFamily: poppins,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Get.toNamed(Routes.phrasesView);
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: const Color(0xfff07300)),
-                    child: ListTile(
-                      leading: Container(
-                        height: 50,
-                        width: 50,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: context.theme.hintColor),
-                        child: const Icon(
-                          Icons.my_library_books,
-                          color: Color(0xfff07300),
-                          size: 30,
-                        ),
-                      ),
-                      title: Text(
-                        "phrases",
-                        style: TextStyle(
-                            color: context.theme.hintColor,
-                            fontSize: 18,
-                            fontFamily: poppins,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Text(
-                        "Turning Words into Bridges: Seamless Phrase Translation",
-                        style: TextStyle(
-                            color: context.theme.scaffoldBackgroundColor,
-                            fontSize: 14,
-                            fontFamily: poppins,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                GestureDetector(
-                  onTap: () => Get.toNamed(Routes.dictionaryView),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: const Color(0xffed4153)),
-                    child: ListTile(
-                      leading: Container(
-                        height: 50,
-                        width: 50,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: context.theme.hintColor),
-                        child: const Icon(
-                          Icons.my_library_books_sharp,
-                          color: Color(0xffed4153),
-                          size: 30,
-                        ),
-                      ),
-                      title: Text(
-                        "Dictionary",
-                        style: TextStyle(
-                            color: context.theme.hintColor,
-                            fontSize: 18,
-                            fontFamily: poppins,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Text(
-                        "Unlocking Words: Your Guide to Meaning",
-                        style: TextStyle(
-                            color: context.theme.scaffoldBackgroundColor,
-                            fontSize: 14,
-                            fontFamily: poppins,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                GestureDetector(
                   onTap: () => Get.toNamed(Routes.grammarView),
                   child: Container(
                     decoration: BoxDecoration(
@@ -419,49 +229,6 @@ class HomeView extends GetView<HomeController> {
           ),
         ),
       ),
-    );
-  }
-
-  void showImagePickerOptions(BuildContext context) {
-    showModalBottomSheet(
-      backgroundColor: context.theme.hintColor,
-      context: context,
-      builder: (BuildContext context) {
-        return SafeArea(
-          child: Wrap(
-            children: <Widget>[
-              ListTile(
-                leading: Icon(
-                  Icons.camera_alt,
-                  color: context.theme.primaryColor,
-                ),
-                title: Text(
-                  'Camera',
-                  style: context.textTheme.headlineSmall,
-                ),
-                onTap: () {
-                  controller.pickImage(ImageSource.camera);
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                leading: Icon(
-                  Icons.photo_library,
-                  color: context.theme.primaryColor,
-                ),
-                title: Text(
-                  'Gallery',
-                  style: context.textTheme.headlineSmall,
-                ),
-                onTap: () {
-                  controller.pickImage(ImageSource.gallery);
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          ),
-        );
-      },
     );
   }
 

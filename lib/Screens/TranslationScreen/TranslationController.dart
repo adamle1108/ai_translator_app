@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:aivoicetranslation/Model/translation.dart';
 import 'package:aivoicetranslation/SharePrefHelper/SharePrefKey.dart';
 import 'package:dart_openai/dart_openai.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:get/get.dart';
@@ -18,7 +19,7 @@ import '../PremiumScreen/PremiumController.dart';
 
 class TranslationController extends GetxController {
   Map<String, dynamic>? argument = Get.arguments;
-  RxString selectedModel = "Translate Expert".obs;
+  RxString selectedModel = tr("Translate Expert").obs;
 
   final ImagePicker _picker = ImagePicker();
   File? _image;
@@ -39,13 +40,7 @@ class TranslationController extends GetxController {
 
   // OPTIONS
   bool showPhonetic = true; // Hiển thị phiên âm
-  String expertMode = "Translate Expert"; // Dropdown
-  final List<String> expertModes = const [
-    "Translate Expert",
-    "Formal",
-    "Casual",
-    "Literal"
-  ];
+
 
   // SPEECH/TTS
   late FlutterTts flutterTts;
@@ -109,11 +104,6 @@ class TranslationController extends GetxController {
   // === Options ===
   void togglePhonetic() {
     showPhonetic = !showPhonetic;
-    update();
-  }
-
-  void changeExpert(String value) {
-    expertMode = value;
     update();
   }
 

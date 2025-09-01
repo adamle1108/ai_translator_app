@@ -1,6 +1,7 @@
 import 'package:aivoicetranslation/constant/Appkey.dart';
 import 'package:aivoicetranslation/constant/FontFamily.dart';
 import 'package:aivoicetranslation/routes/app_routes.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../PremiumScreen/PremiumController.dart';
@@ -16,9 +17,9 @@ class HomeView extends GetView<HomeController> {
         appBar: AppBar(
           backgroundColor: context.theme.hintColor,
           title: Text(
-            'AI Voice Translation',
+            'AI Translator',
             style: context.textTheme.headlineMedium,
-          ),
+          ).tr(),
           actions: [
             if (Get.find<PremiumController>().isPremium == false)
               GestureDetector(
@@ -72,7 +73,7 @@ class HomeView extends GetView<HomeController> {
                         readOnly: true,
                         maxLines: 5, // 👈 chỉnh số dòng để tăng chiều cao
                         decoration: InputDecoration(
-                          hintText: "Enter Text..",
+                          hintText: tr("Enter Text"),
                           alignLabelWithHint: true,
                           contentPadding: const EdgeInsets.all(12),
 
@@ -125,7 +126,7 @@ class HomeView extends GetView<HomeController> {
                           children: [
                             const Icon(Icons.translate, size: 20),
                             const SizedBox(width: 6),
-                            Text("Translate Expert"), // dùng Obx để update
+                            Text("Translate Expert").tr(), // dùng Obx để update
                             const Icon(Icons.keyboard_arrow_down),
                           ],
                         ),

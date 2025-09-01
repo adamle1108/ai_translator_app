@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -118,7 +119,7 @@ class TranslationView extends GetView<TranslationController> {
                                   fontSize: 16,
                                 ),
                                 decoration: InputDecoration(
-                                  hintText: "Enter Text..",
+                                  hintText: tr("Enter Text"),
                                   alignLabelWithHint: true,
                                   // 👇 chỉnh padding riêng
                                   contentPadding: const EdgeInsets.only(
@@ -432,7 +433,7 @@ class TranslationView extends GetView<TranslationController> {
                 },
               ),
               RadioListTile<String>(
-                title: const Text("Translate Expert"),
+                title:  Text("Translate Expert").tr(),
                 subtitle: const Text("Default and normal"),
                 value: "Translate Expert",
                 groupValue: controller.selectedModel.value,

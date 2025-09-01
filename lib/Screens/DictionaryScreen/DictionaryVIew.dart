@@ -1,4 +1,5 @@
 import 'package:aivoicetranslation/widgets/textfield.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import '../../Model/DicionaryModel.dart';
 import 'DictionaryController.dart';
@@ -33,7 +34,7 @@ class DictionaryView extends GetView<DictionaryController> {
                     color: context.theme.hintColor,
                     borderRadius: BorderRadius.circular(10)),
                 child: AppTextField(
-                  hintText: "Enter Text",
+                  hintText: tr("Enter Text"),
                   controller: controller.textController,
                   maxLines: 1,
                   onTap: () {

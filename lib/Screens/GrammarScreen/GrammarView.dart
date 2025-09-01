@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../constant/FontFamily.dart';
@@ -47,7 +48,7 @@ class GrammarView extends GetView<GrammarController> {
                         children: [
                           AppTextField(
                             maxLines: 6,
-                            hintText: "Enter Text..",
+                            hintText: tr("Enter Text"),
                             controller: controller.textFieldController,
                             onTap: () {
                 

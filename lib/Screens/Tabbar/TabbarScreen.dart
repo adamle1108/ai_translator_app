@@ -1,4 +1,5 @@
 import 'package:aivoicetranslation/Screens/HomeScreen/HomeView.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -22,10 +23,10 @@ class MainView extends GetView<MainController> {
   @override
   Widget build(BuildContext context) {
     final tabs = [
-      {"icon": Icons.translate, "label": "Trình dịch"},
-      {"icon": Icons.menu_book, "label": "Từ điển"},
-      {"icon": Icons.format_quote, "label": "Cụm từ"},
-      {"icon": Icons.people, "label": "Trò chuyện"},
+      {"icon": Icons.translate, "label": "Translator"},
+      {"icon": Icons.menu_book, "label": "Dictionary"},
+      {"icon": Icons.format_quote, "label": "Phrase"},
+      {"icon": Icons.people, "label": "Conversation"},
     ];
 
     return Obx(
@@ -168,7 +169,7 @@ class MainView extends GetView<MainController> {
                       ? Colors.blue
                       : Colors.grey,
                 ),
-              ),
+              ).tr(),
             ],
           ),
         ),

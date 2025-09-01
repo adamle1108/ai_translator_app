@@ -1,5 +1,6 @@
 import 'package:aivoicetranslation/Screens/AiTranslation/AiTranslationController.dart';
 import 'package:aivoicetranslation/widgets/textfield.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -154,7 +155,7 @@ class AiTranslationView extends GetView<AiTranslationController> {
                           controller.scrollToEnd();
                         },);
                       },
-                      hintText: "Enter Text",
+                      hintText: tr("Enter Text"),
                       controller: controller.textController,
                       suffixIcon: IconButton(
                           onPressed: () {

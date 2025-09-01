@@ -1,6 +1,7 @@
 import 'package:aivoicetranslation/Screens/OCRScreen/OCRController.dart';
 import 'package:aivoicetranslation/constant/FontFamily.dart';
 import 'package:aivoicetranslation/routes/app_routes.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -71,7 +72,7 @@ class OCRView extends GetView<OCRController> {
                           children: [
                             AppTextField(
                               maxLines: 8,
-                              hintText: "Enter Text..",
+                              hintText: tr("Enter Text"),
                               controller: controller.textFieldController,
                               onTap: () {},
                               onChanged: (value) {
